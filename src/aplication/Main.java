@@ -6,7 +6,6 @@ import java.util.Set;
 
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
-import model.entities.Department;
 import model.entities.Seller;
 
 public class Main {
@@ -16,15 +15,25 @@ public class Main {
 		
 		
 		SellerDao sellerDao = DaoFactory.createSellerDao();
-
-		Department department = new Department(2, null);
-		List<Seller> list = sellerDao.findByDepartment(department);
+		
+		//Department department = new Department(2, null);
+		/*List<Seller> list = sellerDao.findByDepartment(department);
 		Set<Seller> list0 = new HashSet<>();
 
 		for (Seller obj: list) {
 			list0.add(obj);
 		}
 		for (Seller obj: list0) {
+			System.out.println(obj);
+		}*/
+		
+		List<Seller> seller = sellerDao.findAll();
+		Set<Seller> list = new HashSet<>();
+		
+		for (Seller obj: seller) {
+			list.add(obj);
+		}
+		for (Seller obj: list) {
 			System.out.println(obj);
 		}
 	

@@ -98,40 +98,74 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public List<Seller> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		PreparedStatement st = null;
+		ResultSet rs = null;
 
+		try {
+			st = conn.prepareStatement("SELECT seller.*,department.Name DepName " + "FROM seller INNER JOIN department "
+					 + "ORDER BY Name");
+
+			
+
+			rs = st.executeQuery();
+
+			List<Seller> list = new ArrayList<Seller>();
+			Map<Integer, Department> map = new HashMap<Integer, Department>();
+
+			while (rs.next()) {
+
+				Department dep = map.get(rs.getInt("DepartmentId"));
+
+				if (dep == null) {
+					dep = instatiateDepartment(rs);
+					map.put(rs.getInt("DepartmentId"), dep);
+				}
+
+				Seller obj = instatiateSeller(rs, dep);
+				list.add(obj);
+
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new db.DbException(e.getMessage());
+		} finally {
+			DB.closeConnection();
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+
+		}
+	}
+		
 	@Override
 	public List<Seller> findByDepartment(Department department) {
+		
+	
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
 		try {
 			st = conn.prepareStatement("SELECT seller.*,department.Name DepName " + "FROM seller INNER JOIN department "
 					+ "ON seller.DepartmentId = ? " + "ORDER BY Name");
-			
+
 			st.setInt(1, department.getId());
-					
+
 			rs = st.executeQuery();
-			
+
 			List<Seller> list = new ArrayList<Seller>();
 			Map<Integer, Department> map = new HashMap<Integer, Department>();
-			
+
 			while (rs.next()) {
-				
+
 				Department dep = map.get(rs.getInt("DepartmentId"));
-				
+
 				if (dep == null) {
 					dep = instatiateDepartment(rs);
 					map.put(rs.getInt("DepartmentId"), dep);
 				}
-				
-		
+
 				Seller obj = instatiateSeller(rs, dep);
 				list.add(obj);
-				
-				
+
 			}
 			return list;
 		} catch (SQLException e) {
