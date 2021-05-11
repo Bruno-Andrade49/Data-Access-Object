@@ -1,7 +1,12 @@
 package aplication;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
+import model.entities.Department;
 import model.entities.Seller;
 
 public class Main {
@@ -11,11 +16,17 @@ public class Main {
 		
 		
 		SellerDao sellerDao = DaoFactory.createSellerDao();
-		
-		Seller seller = sellerDao.findById(8);
-		
-		System.out.println(seller);
-		
+
+		Department department = new Department(2, null);
+		List<Seller> list = sellerDao.findByDepartment(department);
+		Set<Seller> list0 = new HashSet<>();
+
+		for (Seller obj: list) {
+			list0.add(obj);
+		}
+		for (Seller obj: list0) {
+			System.out.println(obj);
+		}
 	
 	}
 
