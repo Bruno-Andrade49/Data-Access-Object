@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,17 +71,36 @@ public class SellerDaoJDBC implements SellerDao {
 	}
 		
 		  
-
+	
 	
 
 	@Override
-	public void update(Seller obj) {
-		// TODO Auto-generated method stub
-
+	public void deleteById(Integer id) {
+		
+		PreparedStatement st = null;
+		
+		try { st = conn.prepareStatement("DELETE FROM seller " +
+				"WHERE Id = ?",
+				Statement.RETURN_GENERATED_KEYS);
+		
+			st.setInt(1, id);
+			
+			st.executeUpdate();
+			
+			
+		}
+		catch (SQLException e) {
+			throw new db.DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
+		
+		
 	}
 
 	@Override
-	public void deleteById(Integer id) {
+	public void update(Seller obj) {
 		// TODO Auto-generated method stub
 
 	}

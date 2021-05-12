@@ -74,6 +74,8 @@ public class Main {
 		}
 		
 		
+		sellerDao.deleteById(16);
+		
 		
 	
 	}
