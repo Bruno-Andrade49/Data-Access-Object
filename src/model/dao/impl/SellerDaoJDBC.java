@@ -60,10 +60,8 @@ public class SellerDaoJDBC implements SellerDao {
 				throw new db.DbException("Nenhuma inserção foi localizada");
 			}
 			
-			
-			
 		} catch (SQLException e) {
-		throw new db.DbException(e.getMessage());
+			throw new db.DbException(e.getMessage());
 		} finally {
 			DB.closeStatement(st);
 		}
@@ -101,10 +99,30 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public void update(Seller obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try { st = conn.prepareStatement("UPDATE seller " +
+						"SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " +
+						"WHERE Id = ?");
+		
+		st.setString(1, obj.getName());
+		st.setString(2, obj.getEmail());
+		st.setDate(3, new java.sql.Date(obj.getBithDate().getTime()));
+		st.setDouble(4, obj.getBaseSalary());
+		st.setObject(5, obj.getDepartament().getId());
+		st.setInt(6, obj.getId());
+		
+		st.executeUpdate();
+		
 
+		} catch (SQLException e) {
+			throw new db.DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
+			
 	}
-
+		
 	@Override
 	public Seller findById(Integer id) {
 

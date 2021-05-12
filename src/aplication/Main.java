@@ -58,7 +58,7 @@ public class Main {
 			System.out.println(obj);
 		}*/
 		
-		Department dep = new Department(2, null);
+		/*Department dep = new Department(2, null);
 		List<Seller> tuplas = sellerDao.findByDepartment(dep);
 		
 		for (Seller seller : tuplas) {
@@ -76,6 +76,15 @@ public class Main {
 		
 		sellerDao.deleteById(16);
 		
+		Seller seller01 = new Seller(14, "Gilmara", "gil.mara.lucia@hotmail.com", new Date(), 5000.00, null);
+		*/
+		
+		Seller seller = new Seller();
+		seller = sellerDao.findById(14);
+		seller.setBaseSalary(5000.00);
+		seller.setName("Gilmara");
+		seller.setEmail("gil.mara.lucia@hotmail.com");
+		sellerDao.update(seller);
 		
 	
 	}
