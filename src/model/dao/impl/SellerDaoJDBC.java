@@ -27,9 +27,49 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public void insert(Seller obj) {
-		// TODO Auto-generated method stub
-
+		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("INSERT INTO seller " + 
+					"(Name, Email, BirthDate, BaseSalary, DepartmentId) " +
+					"VALUES " +
+					"(?, ?, ?, ?, ?)", 
+					java.sql.Statement.RETURN_GENERATED_KEYS);
+					
+		
+			st.setString(1, obj.getName());
+			st.setString(2, obj.getEmail());
+			st.setDate(3, new java.sql.Date(obj.getBithDate().getTime()));
+			st.setDouble(4, obj.getBaseSalary());
+			st.setObject(5, obj.getDepartament().getId());
+			
+			int idAfetado = st.executeUpdate();
+			
+			if (idAfetado > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(rs);
+			}
+			else {
+				throw new db.DbException("Nenhuma inserção foi localizada");
+			}
+			
+			
+			
+		} catch (SQLException e) {
+		throw new db.DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
+		
 	}
+		
+		  
+
+	
 
 	@Override
 	public void update(Seller obj) {
@@ -67,7 +107,6 @@ public class SellerDaoJDBC implements SellerDao {
 		} catch (SQLException e) {
 			throw new db.DbException(e.getMessage());
 		} finally {
-			DB.closeConnection();
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
@@ -129,7 +168,6 @@ public class SellerDaoJDBC implements SellerDao {
 		} catch (SQLException e) {
 			throw new db.DbException(e.getMessage());
 		} finally {
-			DB.closeConnection();
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 
@@ -171,7 +209,6 @@ public class SellerDaoJDBC implements SellerDao {
 		} catch (SQLException e) {
 			throw new db.DbException(e.getMessage());
 		} finally {
-			DB.closeConnection();
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 
