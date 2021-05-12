@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import db.DB;
 import model.dao.SellerDao;
@@ -150,7 +152,10 @@ public class SellerDaoJDBC implements SellerDao {
 
 			List<Seller> list = new ArrayList<Seller>();
 			Map<Integer, Department> map = new HashMap<Integer, Department>();
+			Set<Seller> list0 = new HashSet<>();
+			List<Seller> listaFinal = new ArrayList<Seller>();
 
+ 
 			while (rs.next()) {
 
 				Department dep = map.get(rs.getInt("DepartmentId"));
@@ -162,9 +167,18 @@ public class SellerDaoJDBC implements SellerDao {
 
 				Seller obj = instatiateSeller(rs, dep);
 				list.add(obj);
+				
 
 			}
-			return list;
+			
+			for (Seller seller : list) {
+				list0.add(seller);
+			}
+			for (Seller seller : list0) {
+				listaFinal.add(seller);
+			}
+			
+			return listaFinal;
 		} catch (SQLException e) {
 			throw new db.DbException(e.getMessage());
 		} finally {
@@ -191,7 +205,10 @@ public class SellerDaoJDBC implements SellerDao {
 
 			List<Seller> list = new ArrayList<Seller>();
 			Map<Integer, Department> map = new HashMap<Integer, Department>();
+			Set<Seller> list0 = new HashSet<>();
+			List<Seller> listaFinal = new ArrayList<Seller>();
 
+ 
 			while (rs.next()) {
 
 				Department dep = map.get(rs.getInt("DepartmentId"));
@@ -203,9 +220,18 @@ public class SellerDaoJDBC implements SellerDao {
 
 				Seller obj = instatiateSeller(rs, dep);
 				list.add(obj);
+				
 
 			}
-			return list;
+			
+			for (Seller seller : list) {
+				list0.add(seller);
+			}
+			for (Seller seller : list0) {
+				listaFinal.add(seller);
+			}
+			
+			return listaFinal;
 		} catch (SQLException e) {
 			throw new db.DbException(e.getMessage());
 		} finally {

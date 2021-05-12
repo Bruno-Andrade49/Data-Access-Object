@@ -31,7 +31,7 @@ public class Main {
 		
 		
 		
-		List<Seller> seller = sellerDao.findAll();
+		/*List<Seller> seller = sellerDao.findAll();
 		Set<Seller> list = new HashSet<>();
 		
 		for (Seller obj: seller) {
@@ -56,7 +56,25 @@ public class Main {
 		}
 		for (Seller obj: list0) {
 			System.out.println(obj);
+		}*/
+		
+		Department dep = new Department(2, null);
+		List<Seller> tuplas = sellerDao.findByDepartment(dep);
+		
+		for (Seller seller : tuplas) {
+			System.out.println(seller);
 		}
+		
+		System.out.println("---------------");
+		
+		List<Seller> listaInteira = sellerDao.findAll();
+		
+		for (Seller seller : listaInteira) {
+			System.out.println(seller);
+		}
+		
+		
+		
 	
 	}
 
