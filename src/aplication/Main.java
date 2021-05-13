@@ -1,11 +1,13 @@
 package aplication;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import model.dao.DaoFactory;
+import model.dao.DepartmentDao;
 import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
@@ -17,6 +19,7 @@ public class Main {
 		
 		
 		SellerDao sellerDao = DaoFactory.createSellerDao();
+		DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
 		
 		//Department department = new Department(2, null);
 		/*List<Seller> list = sellerDao.findByDepartment(department);
@@ -79,12 +82,35 @@ public class Main {
 		Seller seller01 = new Seller(14, "Gilmara", "gil.mara.lucia@hotmail.com", new Date(), 5000.00, null);
 		*/
 		
-		Seller seller = new Seller();
+		/*Seller seller = new Seller();
 		seller = sellerDao.findById(14);
 		seller.setBaseSalary(5000.00);
 		seller.setName("Gilmara");
 		seller.setEmail("gil.mara.lucia@hotmail.com");
 		sellerDao.update(seller);
+		*/
+		
+		/*Department dep01 = new Department(5, "Escolar");
+		departmentDao.insert(dep01);*/
+		
+		
+		Department dep = departmentDao.findById(5);
+		
+		System.out.println(dep);
+		
+		System.out.println("-----------");
+		
+		List<Department> departamentos = new ArrayList<Department>();
+		
+		departamentos = departmentDao.findAll();
+		
+		for (Department department : departamentos) {
+			System.out.println(department);
+		}
+		
+		
+		
+		
 		
 	
 	}
